@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Enums\RoleEnum;
+use App\Http\Enums\StatusUserEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,9 +16,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('social_id')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->boolean('is_active')->default(StatusUserEnum::nonActive);
+            $table->dateTime('duration')->default(now()->addDays(2));
+            $table->foreignId('role_id')->default(3)->constrained('roles');
+            $table->string('password')->default(bcrypt('12345678'));
             $table->rememberToken();
             $table->timestamps();
         });
