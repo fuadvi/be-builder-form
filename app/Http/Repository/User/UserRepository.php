@@ -18,6 +18,13 @@ class UserRepository implements IUserRepository
     public function addUser(array $data): User
     {
         $data['password'] = Hash::make($data['password']);
-       return $this->user->create($data);
+        return $this->user->create($data);
     }
+
+    public function getByEmail(string $email): User
+    {
+        return $this->user->whereEmail($email)->first();
+    }
+
+
 }
