@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         $user = $this->userRepo->addUser($request->validated());
 
-        return $this->success("Berhasil Mendaftar Akun", $user);
+        return $this->success(__('auth.success',['message' =>"Mendaftar Akun"]), $user);
     }
 
 }
