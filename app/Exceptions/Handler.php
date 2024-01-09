@@ -2,11 +2,17 @@
 
 namespace App\Exceptions;
 
+use App\Http\Traits\ResponFormater;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ResponFormater;
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -26,5 +32,10 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (AuthenticationException $exception, $request) {
+           return $this->error('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+        });
+
     }
 }

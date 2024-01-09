@@ -3,19 +3,19 @@
 namespace App\Http\Repository\UserTeam;
 
 use App\Http\Repository\UserTeam\IUserTeamRepository;
-use App\Models\UserTeam;
+use App\Models\Team;
 use Illuminate\Support\Facades\DB;
 
 class UserTeamRepository implements IUserTeamRepository
 {
     public function __construct(
-        private UserTeam $userTeam
+        private Team $userTeam
     )
     {
     }
 
 
-    public function create(array $data): UserTeam
+    public function create(array $data): Team
     {
         try {
             DB::beginTransaction();
@@ -37,7 +37,7 @@ class UserTeamRepository implements IUserTeamRepository
         return $team;
     }
 
-    public function addPeople(UserTeam $userTeam,array $peoples)
+    public function addPeople(Team $userTeam, array $peoples)
     {
         collect($peoples)->each(fn($people) => $userTeam->member()->create($people));
     }

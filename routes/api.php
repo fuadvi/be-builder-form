@@ -28,7 +28,9 @@ Route::controller(AuthController::class)
     });
 
 Route::controller(UserTeamController::class)
+    ->middleware('auth:sanctum')
     ->group(function (){
         Route::post('teams', 'createTeam');
+        Route::post('teams/members', 'addPeople');
     });
 

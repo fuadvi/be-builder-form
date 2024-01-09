@@ -6,7 +6,7 @@ use App\Http\Repository\UserTeam\IUserTeamRepository;
 use App\Http\Requests\AddPeopleTeam;
 use App\Http\Requests\CreateTeamRequest;
 use App\Http\Traits\ResponFormater;
-use App\Models\UserTeam;
+use App\Models\Team;
 
 class UserTeamController extends Controller
 {
@@ -24,7 +24,7 @@ class UserTeamController extends Controller
         return $this->success(__('team.success',['message' => 'Membuat Team']),$team);
     }
 
-    public function addPeople(UserTeam $userTeam,AddPeopleTeam $request)
+    public function addPeople(Team $userTeam, AddPeopleTeam $request)
     {
         $this->userTeamRepo->addPeople($userTeam,$request->validated());
         return $this->success(__('team.success',['message' => 'Membuat Team']),null);
