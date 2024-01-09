@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddPeopleTeam extends FormRequest
 {
@@ -11,7 +12,7 @@ class AddPeopleTeam extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,15 @@ class AddPeopleTeam extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'member' => ['required','array'],
+            'member.*' => [
+                'required',
+                'integer',
+                Rule::exists('users', 'id')->whereNotIn('id', function ($query) {
+                    // Query to check if the user ID is already associated with the team
+                    $query->select('user_id')->from('team_users')->where('team_id', $this->team->id);
+                }),
+            ],
         ];
     }
 }

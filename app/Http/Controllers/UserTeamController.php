@@ -24,9 +24,9 @@ class UserTeamController extends Controller
         return $this->success(__('team.success',['message' => 'Membuat Team']),$team);
     }
 
-    public function addPeople(Team $userTeam, AddPeopleTeam $request)
+    public function addPeople(Team $team, AddPeopleTeam $request)
     {
-        $this->userTeamRepo->addPeople($userTeam,$request->validated());
+        $this->userTeamRepo->addPeople($team,$request->validated());
         return $this->success(__('team.success',['message' => 'Membuat Team']),null);
     }
 

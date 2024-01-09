@@ -39,7 +39,9 @@ class UserTeamRepository implements IUserTeamRepository
 
     public function addPeople(Team $userTeam, array $peoples)
     {
-        collect($peoples)->each(fn($people) => $userTeam->member()->create($people));
+        collect($peoples['member'])->each(fn($people) => $userTeam->member()->create([
+            'user_id' => $people
+        ]));
     }
 
 

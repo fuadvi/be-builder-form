@@ -31,6 +31,6 @@ Route::controller(UserTeamController::class)
     ->middleware('auth:sanctum')
     ->group(function (){
         Route::post('teams', 'createTeam');
-        Route::post('teams/members', 'addPeople');
+        Route::post('teams/{team}/members', 'addPeople');
     });
 
