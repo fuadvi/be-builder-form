@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'create' => 'Berhasil Membuat Team'
+    'success' => 'Berhasil :message'
 ];

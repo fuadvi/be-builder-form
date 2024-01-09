@@ -18,4 +18,11 @@ class UserTeamRepository implements IUserTeamRepository
     {
         return $this->userTeam->create($data);
     }
+
+    public function addPeople(UserTeam $userTeam,array $peoples)
+    {
+        collect($peoples)->each(fn($people) => $userTeam->member()->create($people));
+    }
+
+
 }
