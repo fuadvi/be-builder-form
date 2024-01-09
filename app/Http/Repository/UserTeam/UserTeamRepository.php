@@ -4,6 +4,7 @@ namespace App\Http\Repository\UserTeam;
 
 use App\Http\Repository\UserTeam\IUserTeamRepository;
 use App\Models\UserTeam;
+use Illuminate\Support\Facades\DB;
 
 class UserTeamRepository implements IUserTeamRepository
 {
@@ -16,7 +17,24 @@ class UserTeamRepository implements IUserTeamRepository
 
     public function create(array $data): UserTeam
     {
-        return $this->userTeam->create($data);
+        try {
+            DB::beginTransaction();
+
+            $team = $this->userTeam->create($data);
+
+            $team->member()->create([
+                'user_id' => auth()->user()->id
+            ]);
+
+            DB::commit();
+        } catch (\Exception $err)
+        {
+            DB::rollBack();
+
+            throw $err;
+        }
+
+        return $team;
     }
 
     public function addPeople(UserTeam $userTeam,array $peoples)
