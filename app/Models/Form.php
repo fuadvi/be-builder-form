@@ -20,4 +20,9 @@ class Form extends Model
             $model->uuid = Str::uuid();
         });
     }
+
+    public function fields()
+    {
+        return $this->hasOne(FormField::class);
+    }
 }

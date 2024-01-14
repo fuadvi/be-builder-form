@@ -3,7 +3,6 @@
 namespace App\Http\Repository\form;
 
 use App\Models\Form;
-use Illuminate\Support\Str;
 
 class FormRepository implements IFormRepository
 {
@@ -17,4 +16,18 @@ class FormRepository implements IFormRepository
         $data['user_id'] = auth()->user()->id;
         $this->form->create($data);
     }
+
+    public function addComponent(array $data, Form $form): void
+    {
+        $form->fields()->create([
+            'component' => json_encode($data)
+        ]);
+    }
+
+    public function getById(int $formId): Form
+    {
+        return $this->form->findOrFail($formId);
+    }
+
+
 }

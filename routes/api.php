@@ -30,5 +30,12 @@ Route::controller(UserTeamController::class)
         Route::post('teams/{team}/members', 'addPeople');
     });
 
+
+Route::controller(FormController::class)
+    ->middleware('auth:sanctum')
+    ->group(function (){
+        Route::post('forms/{id}/component','addFormField');
+    });
+
 Route::apiResource('forms',FormController::class)->middleware('auth:sanctum');
 
