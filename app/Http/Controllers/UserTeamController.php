@@ -27,7 +27,17 @@ class UserTeamController extends Controller
     public function addPeople(Team $team, AddPeopleTeam $request)
     {
         $this->userTeamRepo->addPeople($team,$request->validated());
-        return $this->success(__('team.success',['message' => 'Membuat Team']),null);
+        return $this->success(__('team.success',['message' => 'Menambahkan Member']),null);
     }
+
+    public function removeMember(Team $team, $userId)
+    {
+       if (!$this->userTeamRepo->removeMember($team,$userId))
+           throw new \Exception("Tidak Memiliki Akses Hapus Member",400);
+
+       return $this->success(__('team.success',['message' => 'Mengahpus Member']),null);
+    }
+
+    
 
 }

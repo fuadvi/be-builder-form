@@ -20,6 +20,7 @@ class UserTeamRepository implements IUserTeamRepository
         try {
             DB::beginTransaction();
 
+            $data['user_id'] = auth()->user()->id;
             $team = $this->userTeam->create($data);
 
             $team->member()->create([
@@ -44,5 +45,11 @@ class UserTeamRepository implements IUserTeamRepository
         ]));
     }
 
+    public function removeMember(Team $userTeam, $userId): bool
+    {
+        if ($userTeam->user_id !== $userId) return false;
+
+       return $userTeam->member->whereUserId($userId)->delete();
+    }
 
 }

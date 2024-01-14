@@ -9,4 +9,5 @@ interface IUserTeamRepository
     public function create(array $data): Team;
 
     public function addPeople(Team $userTeam, array $peoples);
+    public function removeMember(Team $userTeam, $userId);
 }
