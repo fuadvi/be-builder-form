@@ -25,4 +25,9 @@ class Form extends Model
     {
         return $this->hasOne(FormField::class);
     }
+
+    public function answers()
+    {
+        return $this->hasMany(AnswerForms::class);
+    }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Repository\form\IFormRepository;
 use App\Http\Requests\addFormFieldRequest;
+use App\Http\Requests\AnswerRequest;
 use App\Http\Requests\CreateFormRequest;
+use App\Http\Resources\FormResource;
 use App\Http\Traits\ResponFormater;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,5 +42,26 @@ class FormController extends Controller
         $form = $this->formRepo->getById($formId);
         $this->formRepo->addComponent($request->validated(),$form);
         return $this->success(__('form.success',['message'=> "menambahkan field"]),null,Response::HTTP_OK);
+    }
+
+    public function show(string $uuid)
+    {
+        $form = $this->formRepo->getByUuid($uuid);
+        return $this->success(
+            __('form.success',['message'=> "detail form"]),
+            new FormResource($form),
+            Response::HTTP_OK
+        );
+    }
+
+    public function processAnswer(AnswerRequest $request, string $uuid)
+    {
+        $form = $this->formRepo->getByUuid($uuid);
+        $this->formRepo->addAnswer($request->validated(),$form);
+        return $this->success(
+            __('form.success',['message'=> "add answer"]),
+            null,
+            Response::HTTP_OK
+        );
     }
 }

@@ -35,6 +35,7 @@ Route::controller(FormController::class)
     ->middleware('auth:sanctum')
     ->group(function (){
         Route::post('forms/{id}/component','addFormField');
+        Route::post('forms/{uuid}/answers','processAnswer');
     });
 
 Route::apiResource('forms',FormController::class)->middleware('auth:sanctum');

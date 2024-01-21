@@ -29,5 +29,18 @@ class FormRepository implements IFormRepository
         return $this->form->findOrFail($formId);
     }
 
+    public function getByUuid(string $uuid)
+    {
+        return $this->form
+            ->with('fields')
+            ->whereUuid($uuid)
+            ->first();
+    }
 
+    public function addAnswer(array $data, Form $form): void
+    {
+        $form->answers()->create([
+            'answer' => json_encode(array_values($data))
+        ]);
+    }
 }
