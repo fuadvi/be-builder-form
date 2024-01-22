@@ -30,4 +30,11 @@ class Form extends Model
     {
         return $this->hasMany(AnswerForms::class);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class FormResource extends JsonResource
 {
@@ -19,8 +20,8 @@ class FormResource extends JsonResource
             'uuid' => $this->uuid,
             'title' => $this->title,
             'description' => $this->description,
-            'background' => $this->background,
-            'updated_at' => $this->updated_at,
+            'background' => url(Storage::url($this->background)),
+            'updated_at' => $this->updated_at->format('d F Y'),
             'fields' => $this->whenLoaded('fields',function (){
                 return $this?->fields?->component;
             }),

@@ -64,4 +64,14 @@ class FormController extends Controller
             Response::HTTP_OK
         );
     }
+
+    public function index()
+    {
+        $forms = $this->formRepo->getAll();
+        return $this->success(
+            __('form.success',['message'=> "list form"]),
+            FormResource::collection($forms),
+            Response::HTTP_OK
+        );
+    }
 }
