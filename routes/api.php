@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\UserTeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,11 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::controller(AuthController::class)
     ->group(function (){
         Route::post('register', 'reqister');
@@ -28,7 +24,18 @@ Route::controller(AuthController::class)
     });
 
 Route::controller(UserTeamController::class)
+    ->middleware('auth:sanctum')
     ->group(function (){
         Route::post('teams', 'createTeam');
+        Route::post('teams/{team}/members', 'addPeople');
     });
+
+
+Route::controller(FormController::class)
+    ->middleware('auth:sanctum')
+    ->group(function (){
+        Route::post('forms/{id}/component','addFormField');
+    });
+
+Route::apiResource('forms',FormController::class)->middleware('auth:sanctum');
 

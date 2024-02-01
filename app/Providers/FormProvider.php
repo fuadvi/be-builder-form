@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Repository\form\FormRepository;
+use App\Http\Repository\form\IFormRepository;
 use App\Http\Repository\User\IUserRepository;
 use App\Http\Repository\User\UserRepository;
 use App\Http\Repository\UserTeam\IUserTeamRepository;
@@ -18,6 +20,7 @@ class FormProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton(IUserRepository::class, UserRepository::class);
         $this->app->singleton(IUserTeamRepository::class, UserTeamRepository::class);
+        $this->app->singleton(IFormRepository::class, FormRepository::class);
     }
 
     /**
@@ -31,8 +34,9 @@ class FormProvider extends ServiceProvider implements DeferrableProvider
     public function provides(): array
     {
         return [
-          IUserRepository::class,
-          IUserTeamRepository::class
+            IUserRepository::class,
+            IUserTeamRepository::class,
+            IFormRepository::class
         ];
     }
 
