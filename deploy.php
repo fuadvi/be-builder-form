@@ -39,7 +39,7 @@ set('composer_options', '--verbose --prefer-dist --no-progress --no-interaction 
 
 // HARUS DIGANTI SESUAI KEBUTUHAN ANDA
 
-host('ip-172-31-30-67') // Nama remote host server ssh anda | contoh host('NAMA_REMOTE_HOST')
+host('ServerHostingku') // Nama remote host server ssh anda | contoh host('NAMA_REMOTE_HOST')
 ->setHostname('54.151.132.104') // Hostname atau IP address server anda | contoh  ->setHostname('10.10.10.1')
 ->set('remote_user', 'Teuku Fuad Maulana') // SSH user server anda | contoh ->set('remote_user', 'u1234567')
 ->set('port', 22) // SSH port server anda, untuk kasus ini server yang saya gunakan menggunakan port custom | contoh ->set('remote_user', 65002)
