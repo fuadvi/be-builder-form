@@ -3,6 +3,7 @@
 namespace App\Http\Repository\form;
 
 use App\Models\Form;
+use App\Models\TeamUser;
 
 class FormRepository implements IFormRepository
 {
@@ -43,4 +44,17 @@ class FormRepository implements IFormRepository
             'answer' => json_encode(array_values($data))
         ]);
     }
+
+    public function getAll()
+    {
+        return $this->form
+            ->whereHas('team.member',function ($query)
+            {
+                return $query->where('user_id',auth()->user()->id);
+            })
+            ->orderByDesc('id')
+            ->get();
+    }
+
+
 }

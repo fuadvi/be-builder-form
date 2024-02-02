@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserTeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +40,6 @@ Route::controller(FormController::class)
     });
 
 Route::apiResource('forms',FormController::class)->middleware('auth:sanctum');
+Route::apiResource('subscriptions', SubscriptionController::class)
+    ->middleware('auth:sanctum');
 
