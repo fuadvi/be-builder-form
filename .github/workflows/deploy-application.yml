@@ -9,6 +9,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      COMPOSER_PROCESS_TIMEOUT: 0
+      COMPOSER_NO_INTERACTION: 1
+      COMPOSER_NO_AUDIT: 1
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -16,7 +25,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.0'
 
       - name: Install dependencies
         run: composer install --no-dev
@@ -30,4 +39,4 @@ jobs:
 
       - name: Deploy to AWS EC2
         run: |
-          ssh ${{ secrets.AWS_INSTANCE_IP }} "cd /var/www/html && git pull && composer install --no-dev && php artisan migrate --force && php artisan optimize"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.AWS_INSTANCE_IP }} "cd /var/www/html && git pull && composer install --no-dev && php artisan migrate --force && php artisan optimize"
